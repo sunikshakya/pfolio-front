@@ -58,16 +58,18 @@ export default function Hero({ featuredPosts = [] }: HeroProps) {
             />
             <div
               className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.7) 100%)",
-              }}
             />
           </motion.div>
         ) : (
           <div className="absolute inset-0 bg-gradient-to-b from-zinc-800 to-[#0b0b0b]" />
         )}
       </AnimatePresence>
+
+      {/* Bottom fade gradient */}
+      <div
+        className="pointer-events-none absolute bottom-0 left-0 right-0 z-5 h-48"
+       
+      />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col justify-end px-6 pb-12 sm:px-10 sm:pb-16">

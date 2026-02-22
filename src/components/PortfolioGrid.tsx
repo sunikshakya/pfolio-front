@@ -123,7 +123,7 @@ export default function PortfolioGrid({ posts }: PortfolioGridProps) {
         {/* Section header */}
         <div className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-[11px] font-semibold tracking-[0.25em] text-muted uppercase">
-            Featured Portfolio
+            Featured 
           </h2>
 
           {/* Category filter tabs */}

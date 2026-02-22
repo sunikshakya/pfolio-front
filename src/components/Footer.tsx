@@ -5,9 +5,10 @@ export default function Footer() {
         {/* Social icons */}
         <div className="flex gap-4">
           <a
-            href="#"
+            target="_blank"
+            href="https://www.instagram.com/sunikcaptures.co/"
             aria-label="Instagram"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-white/40 hover:text-white"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-foreground/40 hover:text-foreground"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +29,7 @@ export default function Footer() {
           <a
             href="#"
             aria-label="Dribbble"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-white/40 hover:text-white"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-foreground/40 hover:text-foreground"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +51,7 @@ export default function Footer() {
           <a
             href="#"
             aria-label="Email"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-white/40 hover:text-white"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-foreground/40 hover:text-foreground"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +72,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <p className="text-[11px] tracking-[0.2em] text-muted uppercase">
-          &copy; {new Date().getFullYear()} Lens & Light
+          &copy; {new Date().getFullYear()} Sunik Shakya. All rights reserved.
         </p>
       </div>
     </footer>

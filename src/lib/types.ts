@@ -114,6 +114,20 @@ export interface Post {
   updatedAt: string;
 }
 
+// Tutorial content type
+export interface Tutorial {
+  id: number;
+  documentId: string;
+  Title: string;
+  Excerpt: string | null;
+  ReadTime: string | null;
+  CoverImage: StrapiImage | null;
+  Difficulty: string | null;
+  Content: BlockNode[] | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
 // Strapi API wrapper
 export interface StrapiResponse<T> {
   data: T;

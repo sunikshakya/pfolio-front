@@ -1,20 +1,22 @@
-import { getFeaturedPosts, getPosts } from "@/lib/strapi";
-import type { Post } from "@/lib/types";
+import { getFeaturedPosts, getPosts, getTutorials } from "@/lib/strapi";
+import type { Post, Tutorial } from "@/lib/types";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import PortfolioGrid from "@/components/PortfolioGrid";
-import CTA from "@/components/CTA";
+import FeaturedGallery from "@/components/FeaturedGallery";
+import TutorialsGrid from "@/components/TutorialsGrid";
 import Footer from "@/components/Footer";
 
 export default async function Home() {
   let posts: Post[] = [];
   let featuredPosts: Post[] = [];
+  let tutorials: Tutorial[] = [];
   let error: string | null = null;
 
   try {
-    [posts, featuredPosts] = await Promise.all([
+    [posts, featuredPosts, tutorials] = await Promise.all([
       getPosts(),
       getFeaturedPosts().catch(() => []),
+      getTutorials().catch(() => []),
     ]);
   } catch (e) {
     error = e instanceof Error ? e.message : "Failed to load posts";
@@ -43,9 +45,9 @@ export default async function Home() {
         </section>
       )}
 
-      {/* Portfolio grid */}
+      {/* Featured gallery */}
       {!error && posts.length > 0 && (
-        <PortfolioGrid posts={posts} />
+        <FeaturedGallery posts={posts} />
       )}
 
       {/* Empty state */}
@@ -59,7 +61,8 @@ export default async function Home() {
         </section>
       )}
 
-      <CTA />
+      {/* Tutorials section */}
+      <TutorialsGrid tutorials={tutorials} />
       <Footer />
     </>
   );

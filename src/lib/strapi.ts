@@ -1,4 +1,4 @@
-import type { Post, Project, StrapiResponse } from "./types";
+import type { Post, Project, Tutorial, StrapiResponse } from "./types";
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
 
@@ -89,4 +89,12 @@ export async function getFeaturedPosts(): Promise<Post[]> {
     { next: { revalidate: 60 } },
   );
   return allResponse.data ?? [];
+}
+
+export async function getTutorials(): Promise<Tutorial[]> {
+  const response = await fetchAPI<StrapiResponse<Tutorial[]>>(
+    "/tutorials?populate=CoverImage&sort=createdAt:desc",
+    { next: { revalidate: 60 } },
+  );
+  return response.data;
 }
