@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import { motion } from "motion/react";
 import { getStrapiMedia } from "@/lib/strapi";
 import type { Post, PostCategory, StrapiImage } from "@/lib/types";
 
@@ -146,22 +147,29 @@ export default function PortfolioGrid({ posts }: PortfolioGridProps) {
 
         {/* Grid */}
         <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
-          {filtered.map((post) => {
+          {filtered.map((post, index) => {
             const images = post.images ?? [];
             const firstImg = images[0];
             const thumbUrl = firstImg ? getStrapiMedia(firstImg.url) : null;
 
             return (
-              <button
-                type="button"
+              <motion.div
                 key={post.id}
-                onClick={() => {
-                  if (images.length > 0) openLightbox(images, post.title);
-                }}
-                className="group relative aspect-square overflow-hidden rounded-xl bg-card text-left"
+                className="aspect-square"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                {thumbUrl && firstImg ? (
-                  <Image
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (images.length > 0) openLightbox(images, post.title);
+                  }}
+                  className="group relative aspect-square w-full overflow-hidden rounded-xl bg-card text-left"
+                >
+                  {thumbUrl && firstImg ? (
+                    <Image
                     src={thumbUrl}
                     alt={firstImg.alternativeText || post.title}
                     fill
@@ -187,6 +195,7 @@ export default function PortfolioGrid({ posts }: PortfolioGridProps) {
                   </div>
                 </div>
               </button>
+              </motion.div>
             );
           })}
         </div>

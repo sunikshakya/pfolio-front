@@ -1,4 +1,4 @@
-import type { HeroImage, Post, Project, StrapiResponse } from "./types";
+import type { Post, Project, StrapiResponse } from "./types";
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
 
@@ -61,10 +61,32 @@ export async function getPosts(): Promise<Post[]> {
   return response.data;
 }
 
-export async function getHeroImage(): Promise<string | null> {
-  const response = await fetchAPI<StrapiResponse<HeroImage>>(
-    "/hero-image",
+export async function getFeaturedPost(): Promise<Post | null> {
+  const featuredResponse = await fetchAPI<StrapiResponse<Post[]>>(
+    "/posts?filters[featured][$eq]=true&populate=images&sort=order:asc",
     { next: { revalidate: 60 } },
   );
-  return response.data?.url ?? null;
+  if (featuredResponse.data?.length) {
+    return featuredResponse.data[0];
+  }
+  const allResponse = await fetchAPI<StrapiResponse<Post[]>>(
+    "/posts?populate=images&sort=order:asc",
+    { next: { revalidate: 60 } },
+  );
+  return allResponse.data?.[0] ?? null;
+}
+
+export async function getFeaturedPosts(): Promise<Post[]> {
+  const response = await fetchAPI<StrapiResponse<Post[]>>(
+    "/posts?filters[featured][$eq]=true&populate=images&sort=order:asc",
+    { next: { revalidate: 60 } },
+  );
+  if (response.data?.length) {
+    return response.data;
+  }
+  const allResponse = await fetchAPI<StrapiResponse<Post[]>>(
+    "/posts?populate=images&sort=order:asc&pagination[limit]=3",
+    { next: { revalidate: 60 } },
+  );
+  return allResponse.data ?? [];
 }

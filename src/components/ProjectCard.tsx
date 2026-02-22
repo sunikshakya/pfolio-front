@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "motion/react";
 import { getStrapiMedia } from "@/lib/strapi";
 import type { Project } from "@/lib/types";
 import BlockRenderer from "./BlockRenderer";
@@ -14,7 +17,13 @@ export default function ProjectCard({ project }: { project: Project }) {
     <article className="group overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-shadow hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900">
       {/* Image */}
       {imageUrl && firstImage && (
-        <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+        <motion.div
+          className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
           <Image
             src={imageUrl}
             alt={firstImage.alternativeText || project.title}
@@ -22,7 +31,7 @@ export default function ProjectCard({ project }: { project: Project }) {
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
-        </div>
+        </motion.div>
       )}
 
       {/* Content */}
@@ -78,13 +87,17 @@ export default function ProjectCard({ project }: { project: Project }) {
         {/* Image gallery (if multiple images) */}
         {project.images && project.images.length > 1 && (
           <div className="flex gap-2 pt-2">
-            {project.images.slice(1, 4).map((img) => {
+            {project.images.slice(1, 4).map((img, i) => {
               const url = getStrapiMedia(img.url);
               if (!url) return null;
               return (
-                <div
+                <motion.div
                   key={img.id}
                   className="relative h-16 w-16 overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-800"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.05 }}
                 >
                   <Image
                     src={url}
@@ -93,7 +106,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                     sizes="64px"
                     className="object-cover"
                   />
-                </div>
+                </motion.div>
               );
             })}
             {project.images.length > 4 && (

@@ -2,6 +2,11 @@
 
 import { useState } from "react";
 
+const navItems = [
+  { label: "WORK", href: "#portfolio" },
+  { label: "TUTORIALS", href: "#tutorials" },
+] as const;
+
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -12,12 +17,30 @@ export default function Header() {
           href="/"
           className="text-xs font-semibold tracking-[0.3em] text-white uppercase"
         >
-          SunikCaptures.co
+          SUNIKCAPTURES.CO
         </a>
+
+        {/* Desktop nav */}
+        <nav className="hidden sm:block">
+          <ul className="flex items-center gap-8">
+            {navItems.map(({ label, href }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  className="text-xs font-semibold tracking-[0.2em] text-white uppercase transition-colors hover:text-white/80"
+                >
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* Mobile menu button */}
         <button
           type="button"
           onClick={() => setMenuOpen(!menuOpen)}
-          className="flex flex-col gap-1.5 p-1"
+          className="flex flex-col gap-1.5 p-1 sm:hidden"
           aria-label="Toggle menu"
         >
           <span
@@ -34,16 +57,16 @@ export default function Header() {
 
       {/* Mobile menu overlay */}
       {menuOpen && (
-        <nav className="absolute top-full left-0 w-full border-b border-border bg-background/95 px-6 py-8 backdrop-blur-md sm:px-10">
+        <nav className="absolute top-full left-0 w-full border-b border-border bg-background/95 px-6 py-8 backdrop-blur-md sm:hidden">
           <ul className="flex flex-col gap-5">
-            {["Home", "Portfolio", "About", "Contact"].map((item) => (
-              <li key={item}>
+            {navItems.map(({ label, href }) => (
+              <li key={label}>
                 <a
-                  href={item === "Home" ? "/" : `#${item.toLowerCase()}`}
+                  href={href}
                   className="text-sm tracking-wider text-muted transition-colors hover:text-white"
                   onClick={() => setMenuOpen(false)}
                 >
-                  {item}
+                  {label}
                 </a>
               </li>
             ))}

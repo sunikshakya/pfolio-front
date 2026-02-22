@@ -108,15 +108,10 @@ export interface Post {
   category: PostCategory | null;
   featured: boolean | null;
   order: number | null;
+  location?: string | null;
+  year?: string | null;
   createdAt: string;
   updatedAt: string;
-}
-
-// Hero Image single type
-export interface HeroImage {
-  id: number;
-  documentId: string;
-  url: string | null;
 }
 
 // Strapi API wrapper

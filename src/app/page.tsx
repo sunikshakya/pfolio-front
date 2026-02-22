@@ -1,4 +1,4 @@
-import { getHeroImage, getPosts } from "@/lib/strapi";
+import { getFeaturedPosts, getPosts } from "@/lib/strapi";
 import type { Post } from "@/lib/types";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
@@ -8,11 +8,14 @@ import Footer from "@/components/Footer";
 
 export default async function Home() {
   let posts: Post[] = [];
-  let heroImageUrl: string | null = null;
+  let featuredPosts: Post[] = [];
   let error: string | null = null;
 
   try {
-    [posts, heroImageUrl] = await Promise.all([getPosts(), getHeroImage()]);
+    [posts, featuredPosts] = await Promise.all([
+      getPosts(),
+      getFeaturedPosts().catch(() => []),
+    ]);
   } catch (e) {
     error = e instanceof Error ? e.message : "Failed to load posts";
   }
@@ -20,7 +23,7 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <Hero heroImageUrl={heroImageUrl} />
+      <Hero featuredPosts={featuredPosts} />
 
       {/* Error state */}
       {error && (

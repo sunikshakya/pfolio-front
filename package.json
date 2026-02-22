@@ -13,6 +13,7 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "motion": "^12.34.3",
     "next": "16.1.6",
     "photoswipe": "^5.4.4",
     "react": "19.2.3",

@@ -1,6 +1,6 @@
 export default function CTA() {
   return (
-    <section className="px-6 py-24 sm:px-10">
+    <section id="tutorials" className="px-6 py-24 sm:px-10">
       <div className="mx-auto flex max-w-md flex-col items-center text-center">
         <h2 className="font-serif text-3xl font-medium leading-snug text-white sm:text-4xl">
           Ready to create something timeless?
